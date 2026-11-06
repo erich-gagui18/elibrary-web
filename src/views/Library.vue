@@ -7,7 +7,6 @@ const onlyFavorites = ref(false)
 const favorites = computed(() => store.library.filter((i) => i.is_favorite))
 const items = computed(() => (onlyFavorites.value ? favorites.value : store.library))
 const hideCover = (e) => (e.target.style.visibility = 'hidden')
-const outOfDownloads = () => store.status && store.status.remaining <= 0
 
 onMounted(loadLibrary)
 </script>
@@ -51,7 +50,7 @@ onMounted(loadLibrary)
           <p class="cat">{{ i.book.category }}</p>
         </div>
         <div class="row-actions">
-          <button class="btn solid small" :disabled="outOfDownloads()" @click="download(i.book)">Download</button>
+          <button class="btn solid small" @click="download(i.book)">Download</button>
           <button class="btn ghost small" :aria-pressed="i.is_favorite" @click="toggleFavorite(i.book_id)">
             {{ i.is_favorite ? 'Unfavorite' : 'Favorite' }}
           </button>

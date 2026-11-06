@@ -71,7 +71,6 @@ function save(book) {
   saveBook(book)
 }
 
-const outOfDownloads = () => store.status && store.status.remaining <= 0
 const hideCover = (e) => (e.target.style.visibility = 'hidden')
 </script>
 
@@ -121,9 +120,7 @@ const hideCover = (e) => (e.target.style.visibility = 'hidden')
         <p class="author">{{ b.author }}</p>
         <p class="cat">{{ b.category }}</p>
         <div class="actions">
-          <button class="btn solid small" :disabled="outOfDownloads()" @click="download(b)">
-            {{ outOfDownloads() ? 'Limit reached' : 'Download' }}
-          </button>
+          <button class="btn solid small" @click="download(b)">Download</button>
           <button class="btn ghost small" :disabled="isSaved(b.id)" @click="save(b)">
             {{ isSaved(b.id) ? 'Saved' : 'Save' }}
           </button>
