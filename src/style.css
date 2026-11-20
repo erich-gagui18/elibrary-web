@@ -169,3 +169,22 @@ main { min-height: 70vh; }
   .shelf-row { grid-template-columns: 56px 1fr; }
   .row-actions { grid-column: 1 / -1; justify-content: flex-start; }
 }
+
+/* ---------- Account page + mobile bottom navigation (mirrors the Android app) ---------- */
+.who-name { font-size: 1.5rem; margin-top: 1.5rem; }
+.pill { display: inline-block; margin: 1.2rem 0 0; }
+.stack { display: flex; flex-direction: column; gap: 0.6rem; margin-top: 1.6rem; }
+.stack .btn { text-align: center; text-decoration: none; padding: 0.8rem; }
+
+@media (max-width: 640px) {
+  body { padding-bottom: 4rem; }
+  .top nav {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 15; order: 0; flex-basis: auto;
+    justify-content: space-around; gap: 0; background: var(--paper); border-top: 1px solid var(--ink);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .top nav a { flex: 1; text-align: center; padding: 0.9rem 0; box-shadow: none; }
+  .top nav a.router-link-exact-active { background: var(--ink); color: var(--paper); box-shadow: none; }
+  .account .btn, .account .who { display: none; }
+  .toast { bottom: 5rem; }
+}

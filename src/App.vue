@@ -21,8 +21,9 @@ async function signOut() {
   <header class="top">
     <RouterLink to="/" class="brand">E-Library</RouterLink>
     <nav aria-label="Main">
-      <RouterLink to="/">Browse</RouterLink>
+      <RouterLink to="/">Catalog</RouterLink>
       <RouterLink to="/library">My Library</RouterLink>
+      <RouterLink to="/account">Account</RouterLink>
     </nav>
     <div class="account">
       <span v-if="counter" class="counter">{{ counter }}</span>

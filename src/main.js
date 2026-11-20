@@ -10,7 +10,7 @@ const ready = init()
 router.beforeEach(async (to) => {
   if (to.meta.auth) {
     await ready
-    if (!store.user) return '/login'
+    if (!store.user) return { path: '/login', query: { redirect: to.fullPath } }
   }
 })
 

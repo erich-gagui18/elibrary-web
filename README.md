@@ -32,6 +32,10 @@ The static site is in `dist/`.
 - Download button that calls the backend, which enforces the 5 (guest) and 10 (member) limits
 - Live "downloads left" counter
 - Save books to My Library, mark favorites, remove them (members only; synced through the API)
+- Account page (signed-in user, downloads left, log in / sign up / log out)
+- Log in or sign up returns you to the page you came from
+- Covers retry when Gutenberg is busy, then fall back to a gray tile
+- On phones the navigation becomes a bottom bar: Catalog, My Library, Account (same as the Android app)
 
 ## API contract used (from elibrary-api)
 

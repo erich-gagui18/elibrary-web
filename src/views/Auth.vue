@@ -1,10 +1,16 @@
 <script setup>
 import { reactive, ref, computed } from 'vue'
-import { RouterLink, useRouter } from 'vue-router'
+import { RouterLink, useRouter, useRoute } from 'vue-router'
 import { login, register } from '../store'
 
 const props = defineProps({ mode: { type: String, default: 'login' } })
 const router = useRouter()
+const route = useRoute()
+// Return to the page that sent the user here (same behavior as the Android app).
+const back = computed(() => {
+  const r = route.query.redirect
+  return typeof r === 'string' && r.startsWith('/') ? r : '/'
+})
 const isRegister = computed(() => props.mode === 'register')
 
 const form = reactive({ name: '', email: '', password: '', password_confirmation: '' })
@@ -17,7 +23,7 @@ async function submit() {
   try {
     if (isRegister.value) await register(form)
     else await login(form)
-    router.push('/')
+    router.push(back.value)
   } catch (e) {
     error.value = e.message
   } finally {
@@ -58,10 +64,10 @@ async function submit() {
     </form>
 
     <p class="switch">
-      <template v-if="isRegister">Already have an account? <RouterLink to="/login">Log in</RouterLink></template>
-      <template v-else>New here? <RouterLink to="/register">Create an account</RouterLink></template>
+      <template v-if="isRegister">Already have an account? <RouterLink :to="{ path: '/login', query: route.query }">Log in</RouterLink></template>
+      <template v-else>New here? <RouterLink :to="{ path: '/register', query: route.query }">Create an account</RouterLink></template>
       <br />
-      <RouterLink to="/">Continue as guest</RouterLink>
+      <RouterLink :to="back === '/library' ? '/' : back">Continue as guest</RouterLink>
     </p>
   </section>
 </template>

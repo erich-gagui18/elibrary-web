@@ -1,12 +1,12 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { RouterLink } from 'vue-router'
+import { coverFailed } from '../cover'
 import { store, loadLibrary, download, toggleFavorite, removeBook } from '../store'
 
 const onlyFavorites = ref(false)
 const favorites = computed(() => store.library.filter((i) => i.is_favorite))
 const items = computed(() => (onlyFavorites.value ? favorites.value : store.library))
-const hideCover = (e) => (e.target.style.visibility = 'hidden')
 
 onMounted(loadLibrary)
 </script>
@@ -42,7 +42,7 @@ onMounted(loadLibrary)
     <ul v-else class="shelf">
       <li v-for="i in items" :key="i.id" class="shelf-row">
         <div class="thumb">
-          <img :src="i.book.cover_url" :alt="`Cover of ${i.book.title}`" loading="lazy" referrerpolicy="no-referrer" @error="hideCover" />
+          <img :src="i.book.cover_url" :alt="`Cover of ${i.book.title}`" loading="lazy" referrerpolicy="no-referrer" @error="coverFailed" />
         </div>
         <div class="info">
           <h3>{{ i.book.title }}</h3>

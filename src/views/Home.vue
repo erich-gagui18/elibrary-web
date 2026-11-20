@@ -1,10 +1,12 @@
 <script setup>
 import { ref, watch, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
+import { coverFailed } from '../cover'
 import { api } from '../api'
 import { store, download, saveBook, isSaved, notify } from '../store'
 
 const router = useRouter()
+const route = useRoute()
 
 const books = ref([])
 const categories = ref([])
@@ -65,13 +67,12 @@ onMounted(async () => {
 function save(book) {
   if (!store.user) {
     notify('Log in to save books to your library.')
-    router.push('/login')
+    router.push({ path: '/login', query: { redirect: route.fullPath } })
     return
   }
   saveBook(book)
 }
 
-const hideCover = (e) => (e.target.style.visibility = 'hidden')
 </script>
 
 <template>
@@ -114,7 +115,7 @@ const hideCover = (e) => (e.target.style.visibility = 'hidden')
     <div class="grid" :aria-busy="loading">
       <article v-for="b in books" :key="b.id" class="book">
         <div class="cover" :title="b.title">
-          <img :src="b.cover_url" :alt="`Cover of ${b.title}`" loading="lazy" referrerpolicy="no-referrer" @error="hideCover" />
+          <img :src="b.cover_url" :alt="`Cover of ${b.title}`" loading="lazy" referrerpolicy="no-referrer" @error="coverFailed" />
         </div>
         <h3>{{ b.title }}</h3>
         <p class="author">{{ b.author }}</p>
